@@ -15,7 +15,7 @@ RUN latest_tag=$(echo "$latest_release_info" | grep '"tag_name"' | sed -E 's/.*"
 
 RUN curl -L https://github.com/ciromattia/kcc/archive/refs/tags/v6.1.0.tar.gz > kcc.tar.gz
 RUN tar -xzf kcc.tar.gz
-# RUN mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc
+RUN mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc
 
 # COPY root/ /root-layer/
 
