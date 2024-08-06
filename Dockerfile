@@ -4,5 +4,4 @@ FROM scratch
 
 LABEL maintainer="hvmzx"
 
-# copy local files
 COPY root/ /root-layer/
