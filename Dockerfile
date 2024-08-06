@@ -13,7 +13,7 @@ RUN rm kindlegen.tar.gz
 RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/releases/latest")
 RUN latest_tag=$(echo "$latest_release_info" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
 
-RUN curl -L https://github.com/ciromattia/kcc/archive/refs/tags/$latest_tag.tar.gz > kcc.tar.gz
+RUN curl -L https://github.com/ciromattia/kcc/archive/refs/tags/v6.1.0.tar.gz > kcc.tar.gz
 RUN tar -xzf kcc.tar.gz
 # RUN mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc
 
