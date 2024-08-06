@@ -4,4 +4,4 @@ FROM scratch
 
 LABEL maintainer="hvmzx"
 
-COPY root/ /root-layer/
+COPY root/ /
