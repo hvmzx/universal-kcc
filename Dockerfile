@@ -15,7 +15,7 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     curl -L https://github.com/ciromattia/kcc/archive/refs/tags/$latest_tag.tar.gz > kcc.tar.gz && \
     tar -xzf kcc.tar.gz && \
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc
-COPY kcc root/
+# COPY kcc/ root/
 COPY root/ /root-layer/
 
 ## Single layer deployed image ##
