@@ -5,7 +5,6 @@ WORKDIR .
 RUN curl -L https://archive.org/download/kindlegen_linux_2_6_i386_v2_9/kindlegen_linux_2.6_i386_v2_9.tar.gz > kindlegen.tar.gz
 RUN tar -zxvf kindlegen.tar.gz kindlegen
 RUN chmod +rwx 'kindlegen'
-RUN cp 'kindlegen' '/root/layer/usr/local/bin/'
 RUN rm kindlegen.tar.gz
 
 RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/releases/latest") && \
@@ -15,8 +14,7 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc && \
     touch kcc/KCC_VERSION && \
     echo $latest_tag > kcc/KCC_VERSION && \
-    cp -R 'kcc' '/root/layer/usr/local/bin/'
-
+    cd root/ && touch TOTO
 COPY root/ /root-layer/
 
 ## Single layer deployed image ##
@@ -24,3 +22,5 @@ FROM scratch
 
 # Add files from buildstage
 COPY --from=buildstage /root-layer/ /
+COPY --from=buildstage /kcc/ /root/layer/usr/local/bin/
+COPY --from=buildstage kindlegen /root/layer/usr/local/bin/
