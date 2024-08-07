@@ -1,6 +1,7 @@
-FROM ghcr.io/linuxserver/baseimage-alpine:3.19 as buildstage
+# syntax=docker/dockerfile:1
 
-WORKDIR .
+## Buildstage ##
+FROM ghcr.io/linuxserver/baseimage-alpine:3.19 AS buildstage
 
 RUN curl -L https://archive.org/download/kindlegen_linux_2_6_i386_v2_9/kindlegen_linux_2.6_i386_v2_9.tar.gz > kindlegen.tar.gz
 RUN tar -zxvf kindlegen.tar.gz kindlegen
