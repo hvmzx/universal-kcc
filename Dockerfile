@@ -1,13 +1,11 @@
 FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy as buildstage
 
 WORKDIR .
-# RUN apt-get update && apt-get install -y python3 python3-dev libpng-dev libjpeg-dev p7zip-full p7zip-rar unrar-free libgl1 python3-pyqt5 python3-pip cmake
-# RUN pip install PySide6 Pillow psutil requests python-slugify raven mozjpeg-lossless-optimization natsort[fast] distro
 
 RUN curl -L https://archive.org/download/kindlegen_linux_2_6_i386_v2_9/kindlegen_linux_2.6_i386_v2_9.tar.gz > kindlegen.tar.gz
 RUN tar -zxvf kindlegen.tar.gz kindlegen
 RUN chmod +rwx 'kindlegen'
-RUN cp -R 'kindlegen' '/usr/local/bin/'
+RUN cp 'kindlegen' '/root/layer/usr/local/bin/'
 RUN rm kindlegen.tar.gz
 
 RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/releases/latest") && \
@@ -16,8 +14,9 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     tar -xzf kcc.tar.gz && \
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc && \
     touch kcc/KCC_VERSION && \
-    echo $latest_tag > kcc/KCC_VERSION
-COPY kcc/ /root-layer/
+    echo $latest_tag > kcc/KCC_VERSION && \
+    cp -R 'kcc' '/root/layer/usr/local/bin/'
+
 COPY root/ /root-layer/
 
 ## Single layer deployed image ##
