@@ -16,10 +16,10 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     tar -xzf kcc.tar.gz && \
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc
 
-# COPY root/ /root-layer/
+COPY root/ /root-layer/
 
 ## Single layer deployed image ##
 FROM scratch
 
 # Add files from buildstage
-COPY --from=buildstage /kcc/ /
+COPY --from=buildstage /kcc/ /kcc/run 
