@@ -14,12 +14,16 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc && \
     touch kcc/KCC_VERSION && \
     echo $latest_tag > kcc/KCC_VERSION && \
-    mv kcc root/
+    mv kcc root/ && \
+    mkdir -p /root-layer/kindlegen &&\
+    mv kindlegen /root-layer/kindlegen
 
 COPY root/ /root-layer/
 
 ## Single layer deployed image ##
 FROM scratch
+
+LABEL maintainer="hvmzx"
 
 # Add files from buildstage
 COPY --from=buildstage /root-layer/ /
