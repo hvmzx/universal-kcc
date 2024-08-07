@@ -7,7 +7,7 @@ env:
   ENDPOINT: "hvmzx/universal-kcc" #don't modify
   BASEIMAGE: "universal" #replace
   MODNAME: "kcc" #replace
-  MULTI_ARCH: "true" #set to false if not needed
+  MULTI_ARCH: "false" #set to false if not needed
 
 jobs:
   set-vars:
