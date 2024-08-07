@@ -13,7 +13,8 @@ RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/r
     tar -xzf kcc.tar.gz && \
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc && \
     touch kcc/KCC_VERSION && \
-    echo $latest_tag > kcc/KCC_VERSION
+    echo $latest_tag > kcc/KCC_VERSION && \
+    mv kcc root/
 
 COPY root/ /root-layer/
 
@@ -22,5 +23,3 @@ FROM scratch
 
 # Add files from buildstage
 COPY --from=buildstage /root-layer/ /
-COPY --from=buildstage /kcc/ /root-layer/usr/local/bin/
-COPY --from=buildstage kindlegen /
