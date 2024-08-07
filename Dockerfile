@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy as buildstage
+FROM ghcr.io/linuxserver/baseimage-alpine:3.19 as buildstage
 
 WORKDIR .
 
@@ -7,8 +7,7 @@ RUN tar -zxvf kindlegen.tar.gz kindlegen
 RUN chmod +rwx 'kindlegen'
 RUN rm kindlegen.tar.gz
 
-RUN latest_release_info=$(curl -s "https://api.github.com/repos/ciromattia/kcc/releases/latest") && \
-    latest_tag=$(echo "$latest_release_info" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/') && \
+RUN latest_tag=$(curl -s https://api.github.com/repos/ciromattia/kcc/releases/latest | jq -rc ".tag_name") && \
     curl -L https://github.com/ciromattia/kcc/archive/refs/tags/$latest_tag.tar.gz > kcc.tar.gz && \
     tar -xzf kcc.tar.gz && \
     mv kcc-$(echo "$latest_tag" | sed 's/^.\(.*\)/\1/') kcc && \
